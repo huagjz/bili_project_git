@@ -36,9 +36,22 @@ export default {
 
         const { data: rs } = await this.$http.post('login', this.ruleForm)
         console.log(rs)
-        if (rs.meta.status !== 200) return console.log('登录失败')
+        if (rs.meta.status !== 200) return this.$msg.error(rs.meta.msg)
 
-        console.log('登录成功')
+        this.$msg.success('登录成功');
+        console.log('登录成功');
+
+        // 将登录成功的token，保存在客户端的sessionStorage中
+        //
+        // email: "haha"
+        // id: 500
+        // mobile: "12345"
+        // rid: 0
+        // token: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjUwMCwicmlkIjowLCJpYXQiOjE2MDkwNzExMDMsImV4cCI6MTYwOTE1NzUwM30.Jxk0m_PWKRpFhv6hXoLb5NjNCezeiIo9T3m_9xD7O1w"
+        // username: "admin"
+        window.sessionStorage.setItem('token', rs.data.token);
+
+        this.$router.push('/home');
       })
     },
     resetForm(formName) {
