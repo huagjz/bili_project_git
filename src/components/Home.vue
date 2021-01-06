@@ -10,16 +10,16 @@
       </el-header>
       <el-container>
         <el-aside width="200px">
-          <el-menu background-color="#333744" text-color="#fff" active-text-color="#ffd04b">
-            <el-submenu index="1">
+          <el-menu background-color="#333744" text-color="#fff" active-text-color="#409BFF">
+            <el-submenu v-for="item in menuList" :key="item.id" :index="item.id.toString()">
               <template slot="title">
-                <i class="el-icon-location"></i>
-                <span>导航一</span>
+                <i class="icon iconfont" :class="iconObj[item.id]"></i>
+                <span>{{ item.authName }}</span>
               </template>
-              <el-menu-item index="1-4-1">
+              <el-menu-item v-for="sub in item.children" :key="sub.id" :index="sub.id.toString()">
                 <template slot="title">
-                  <i class="el-icon-location"></i>
-                  <span>导航一</span>
+                  <i class="el-icon-menu"></i>
+                  <span>{{ sub.authName }}</span>
                 </template>
               </el-menu-item>
             </el-submenu>
@@ -36,16 +36,35 @@ export default {
   name: 'Home',
   components: {},
   data() {
-    return {}
+    return {
+      menuList: [],
+      iconObj: {
+        125: 'icon-baocun',
+        103: 'icon-cuotiji',
+        101: 'icon-chenggong',
+        102: 'icon-dengluzhanghao',
+        145: 'icon-bianji'
+      }
+    };
+  },
+  created() {
+    this.getMenuList();
   },
   methods: {
     loginOut() {
-      window.sessionStorage.clear()
+      window.sessionStorage.clear();
 
-      this.$router.push('/login')
+      this.$router.push('/login');
+    },
+    async getMenuList() {
+      const { data: rs } = await this.$http.get('menus');
+
+      if (rs.meta.status !== 200) return this.$msg.error(rs.meta.msg);
+      console.log(rs);
+      this.menuList = rs.data;
     }
   }
-}
+};
 </script>
 
 <style lang="less" scoped>
@@ -75,9 +94,15 @@ export default {
   }
   .el-aside {
     background-color: #333744;
+    .el-menu {
+      border-right: none;
+    }
   }
   .el-main {
     background-color: #eaedf1;
+  }
+  .iconfont {
+    margin-right: 4px;
   }
 }
 </style>
