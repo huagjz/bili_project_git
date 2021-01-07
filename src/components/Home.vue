@@ -9,8 +9,9 @@
         <el-button @click="loginOut">退出</el-button>
       </el-header>
       <el-container>
-        <el-aside width="200px">
-          <el-menu background-color="#333744" text-color="#fff" active-text-color="#409BFF">
+        <el-aside :width="isCollapse?'64px':'200px'">
+          <div class="toggle-button" @click="toggleFn()">|||</div>
+          <el-menu background-color="#333744" text-color="#fff" active-text-color="#409BFF" :collapse="isCollapse" :collapse-transition="false">
             <el-submenu v-for="item in menuList" :key="item.id" :index="item.id.toString()">
               <template slot="title">
                 <i class="icon iconfont" :class="iconObj[item.id]"></i>
@@ -37,6 +38,7 @@ export default {
   components: {},
   data() {
     return {
+      isCollapse: false,
       menuList: [],
       iconObj: {
         125: 'icon-baocun',
@@ -51,6 +53,9 @@ export default {
     this.getMenuList();
   },
   methods: {
+    toggleFn() {
+      this.isCollapse = !this.isCollapse;
+    },
     loginOut() {
       window.sessionStorage.clear();
 
@@ -103,6 +108,15 @@ export default {
   }
   .iconfont {
     margin-right: 4px;
+  }
+  .toggle-button {
+    background-color: #4A5064;
+    color: #FFFFFF;
+    text-align: center;
+    font-size: 10px;
+    line-height: 24px;
+    letter-spacing: 0.2em;
+    cursor: pointer;
   }
 }
 </style>
