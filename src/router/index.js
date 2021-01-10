@@ -2,23 +2,32 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 
 Vue.use(VueRouter)
-
-const routes = [
-  {
-    path: '/',
-    redirect: '/login',
-    component: () => import(/* webpackChunkName: "about" */ '../components/Login.vue')
+const routes = [{
+  path: '/',
+  redirect: '/login',
+  component: () => import(/* webpackChunkName: "about" */ '../components/Login.vue')
+},
+{
+  path: '/login',
+  name: 'Login',
+  component: () => import(/* webpackChunkName: "login" */ '../components/Login.vue')
+},
+{
+  path: '/home',
+  name: 'Home',
+  component: () => import(/* webpackChunkName: "home" */ '../components/Home.vue'),
+  redirect: '/welcome',
+  children: [{
+    path: '/welcome',
+    name: 'Welcome',
+    component: () => import(/* webpackChunkName: "login" */ '../components/Welcome.vue')
   },
   {
-    path: '/login',
-    name: 'Login',
-    component: () => import(/* webpackChunkName: "about" */ '../components/Login.vue')
-  },
-  {
-    path: '/home',
-    name: 'Home',
-    component: () => import(/* webpackChunkName: "about" */ '../components/Home.vue')
-  }
+    path: '/users',
+    name: 'Users',
+    component: () => import(/* webpackChunkName: "login" */ '../components/user/Users.vue')
+  }]
+}
 ]
 
 const router = new VueRouter({

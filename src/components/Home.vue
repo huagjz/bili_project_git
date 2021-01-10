@@ -11,13 +11,13 @@
       <el-container>
         <el-aside :width="isCollapse?'64px':'200px'">
           <div class="toggle-button" @click="toggleFn()">|||</div>
-          <el-menu background-color="#333744" text-color="#fff" active-text-color="#409BFF" :collapse="isCollapse" :collapse-transition="false">
+          <el-menu background-color="#333744" text-color="#fff" active-text-color="#409BFF" :collapse="isCollapse" :collapse-transition="false" router :default-active="activePath">
             <el-submenu v-for="item in menuList" :key="item.id" :index="item.id.toString()">
               <template slot="title">
                 <i class="icon iconfont" :class="iconObj[item.id]"></i>
                 <span>{{ item.authName }}</span>
               </template>
-              <el-menu-item v-for="sub in item.children" :key="sub.id" :index="sub.id.toString()">
+              <el-menu-item v-for="sub in item.children" :key="sub.path" :index="'/'+sub.path" @click="saveNavState('/'+sub.path)">
                 <template slot="title">
                   <i class="el-icon-menu"></i>
                   <span>{{ sub.authName }}</span>
@@ -26,7 +26,9 @@
             </el-submenu>
           </el-menu>
         </el-aside>
-        <el-main>Main</el-main>
+        <el-main>
+          <router-view></router-view>
+        </el-main>
       </el-container>
     </el-container>
   </div>
@@ -46,13 +48,20 @@ export default {
         101: 'icon-chenggong',
         102: 'icon-dengluzhanghao',
         145: 'icon-bianji'
-      }
+      },
+      activePath: '' // 激活的链接地址
     };
   },
   created() {
     this.getMenuList();
+
+    this.activePath = window.sessionStorage.getItem('activePath');
   },
   methods: {
+    saveNavState(path) {
+      window.sessionStorage.setItem('activePath', path);
+      this.activePath = path;
+    },
     toggleFn() {
       this.isCollapse = !this.isCollapse;
     },
@@ -65,7 +74,7 @@ export default {
       const { data: rs } = await this.$http.get('menus');
 
       if (rs.meta.status !== 200) return this.$msg.error(rs.meta.msg);
-      console.log(rs);
+      // console.log(rs);
       this.menuList = rs.data;
     }
   }

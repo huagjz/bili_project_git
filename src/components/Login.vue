@@ -35,7 +35,7 @@ export default {
         if (!valid) return
 
         const { data: rs } = await this.$http.post('login', this.ruleForm)
-        console.log(rs)
+        // console.log(rs)
         if (rs.meta.status !== 200) return this.$msg.error(rs.meta.msg)
 
         this.$msg.success('登录成功');
