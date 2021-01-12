@@ -24,8 +24,27 @@
             <el-switch v-model="scope.row.mg_state"></el-switch>
           </template>
         </el-table-column>
-        <el-table-column label="操作"></el-table-column>
+        <el-table-column label="操作" width="180px">
+          <template>
+            <el-button type="primary" icon="el-icon-edit" size="mini"></el-button>
+            <el-button type="danger" icon="el-icon-delete" size="mini"></el-button>
+
+            <el-tooltip class="item" effect="dark" content="分配角色" placement="top" :enterable="false">
+              <el-button type="warning" icon="el-icon-setting" size="mini"></el-button>
+            </el-tooltip>
+          </template>
+        </el-table-column>
       </el-table>
+      <!-- 分页的内容 -->
+      <el-pagination
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        :current-page="queryInfo.pagenum"
+        :page-sizes="[1, 2, 5, 10]"
+        :page-size="queryInfo.pagesize"
+        layout="total, sizes, prev, pager, next, jumper"
+        :total="total"
+      ></el-pagination>
     </el-card>
   </div>
 </template>
@@ -42,19 +61,29 @@ export default {
       },
       userList: [],
       total: 0
-    }
+    };
   },
   created() {
-    this.getUserList()
+    this.getUserList();
   },
   methods: {
+    handleSizeChange(val) {
+      console.log(`每页 ${val} 条`);
+      this.queryInfo.pagesize = val;
+      this.getUserList();
+    },
+    handleCurrentChange(val) {
+      console.log(`当前页: ${val}`);
+      this.queryInfo.pagenum = val;
+      this.getUserList();
+    },
     async getUserList() {
-      const { data: rs } = await this.$http.get('users', { params: this.queryInfo })
+      const { data: rs } = await this.$http.get('users', { params: this.queryInfo });
 
-      console.log(rs)
-      if (rs.meta.status !== 200) return this.$msg.error(rs.meta.msg)
-      this.userList = rs.data.users
-      this.total = rs.data.total
+      console.log(rs);
+      if (rs.meta.status !== 200) return this.$msg.error(rs.meta.msg);
+      this.userList = rs.data.users;
+      this.total = rs.data.total;
     }
   }
 }
