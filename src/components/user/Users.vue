@@ -8,9 +8,11 @@
     <el-card>
       <el-row :gutter="20">
         <el-col :span="8">
-          <el-input placeholder="请输入内容"><el-button slot="append" icon="el-icon-search"></el-button></el-input>
+          <el-input placeholder="请输入内容" v-model="queryInfo.query" clearable @clear="getUserList()">
+            <el-button slot="append" icon="el-icon-search" @click="getUserList()"></el-button>
+          </el-input>
         </el-col>
-        <el-col :span="4"><el-button type="primary">添加用户</el-button></el-col>
+        <el-col :span="4"><el-button type="primary" @click="addDialogVisible = true">添加用户</el-button></el-col>
       </el-row>
 
       <el-table :data="userList" style="width: 100%" border stripe>
@@ -21,7 +23,7 @@
         <el-table-column prop="role_name" label="角色"></el-table-column>
         <el-table-column label="状态">
           <template slot-scope="scope">
-            <el-switch v-model="scope.row.mg_state"></el-switch>
+            <el-switch v-model="scope.row.mg_state" @change="userStateChange(scope.row)"></el-switch>
           </template>
         </el-table-column>
         <el-table-column label="操作" width="180px">
@@ -46,6 +48,14 @@
         :total="total"
       ></el-pagination>
     </el-card>
+
+    <el-dialog title="添加用户" :visible.sync="addDialogVisible" width="50%">
+      <span>这是一段信息</span>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="addDialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="addDialogVisible = false">确 定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -60,15 +70,29 @@ export default {
         pagesize: 2
       },
       userList: [],
-      total: 0
+      total: 0,
+      addDialogVisible: false
     };
   },
   created() {
     this.getUserList();
   },
   methods: {
+    // 用户状态
+    async userStateChange(userInfo) {
+      console.log(userInfo);
+      const { data: rs } = await this.$http.put(`users/${userInfo.id}/state/${userInfo.mg_state}`);
+
+      if (rs.meta.status !== 200) {
+        this.$msg.error(rs.meta.msg);
+        userInfo.mg_state = false;
+        return;
+      }
+      this.$msg.success('更新用户状态成功！');
+    },
     handleSizeChange(val) {
       console.log(`每页 ${val} 条`);
+      console.log();
       this.queryInfo.pagesize = val;
       this.getUserList();
     },
@@ -77,6 +101,7 @@ export default {
       this.queryInfo.pagenum = val;
       this.getUserList();
     },
+    // 获取数据列表
     async getUserList() {
       const { data: rs } = await this.$http.get('users', { params: this.queryInfo });
 
@@ -86,7 +111,7 @@ export default {
       this.total = rs.data.total;
     }
   }
-}
+};
 </script>
 
 <style></style>
