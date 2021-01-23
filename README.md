@@ -1,1 +1,1 @@
-if (rs.meta.status !== 200) return this.$msg.error(rs.meta.msg);
+if (rs.meta.status !== 200) return this.$message.error(rs.meta.msg);

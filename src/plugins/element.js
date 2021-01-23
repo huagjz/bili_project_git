@@ -13,7 +13,7 @@ Vue.use(Form)
 Vue.use(FormItem)
 Vue.use(Input)
 // 将弹框组件全局挂在到VUe原形实例
-Vue.prototype.$msg = Message
+Vue.prototype.$message = Message
 Vue.use(Container)
 Vue.use(Header)
 Vue.use(Aside)
