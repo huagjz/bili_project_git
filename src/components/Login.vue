@@ -36,9 +36,9 @@ export default {
 
         const { data: rs } = await this.$http.post('login', this.ruleForm)
         // console.log(rs)
-        if (rs.meta.status !== 200) return this.$msg.error(rs.meta.msg)
+        if (rs.meta.status !== 200) return this.$message.error(rs.meta.msg)
 
-        this.$msg.success('登录成功');
+        this.$message.success('登录成功');
         console.log('登录成功');
 
         // 将登录成功的token，保存在客户端的sessionStorage中

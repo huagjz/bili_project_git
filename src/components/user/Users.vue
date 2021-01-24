@@ -147,8 +147,8 @@ export default {
       console.log(rsConfirm);
       if (rsConfirm === 'cancel') return;
       const { data: rs } = await this.$http.delete('users/' + item.id);
-      if (rs.meta.status !== 200) return this.$msg.error(rs.mate.msg);
-      this.$msg.success('删除成功');
+      if (rs.meta.status !== 200) return this.$message.error(rs.mate.msg);
+      this.$message.success('删除成功');
       this.getUserList();
     },
     editUser() {
@@ -157,8 +157,8 @@ export default {
         // 编辑用户的接口
         const { data: rs } = await this.$http.put('users/' + this.editForm.id, { email: this.editForm.email, mobile: this.editForm.mobile });
         console.log(rs);
-        if (rs.meta.status !== 200) return this.$msg.error(rs.meta.msg)
-        this.$msg.success('修改成功')
+        if (rs.meta.status !== 200) return this.$message.error(rs.meta.msg)
+        this.$message.success('修改成功')
         this.editDialogVisible = false;
         this.getUserList();
       });
@@ -167,7 +167,7 @@ export default {
       console.log(item);
       const { data: rs } = await this.$http.get('users/' + item.id);
 
-      if (rs.meta.status !== 200) return this.$msg.error(rs.mate.msg);
+      if (rs.meta.status !== 200) return this.$message.error(rs.mate.msg);
       console.log(rs);
       this.editForm = rs.data;
       this.editDialogVisible = true;
@@ -182,9 +182,9 @@ export default {
         // 添加用户的接口
         const { data: rs } = await this.$http.post('users', this.addForm);
         console.log(rs);
-        if (rs.meta.status !== 201) return this.$msg.error(rs.meta.msg)
+        if (rs.meta.status !== 201) return this.$message.error(rs.meta.msg)
 
-        this.$msg.success('添加用户成功')
+        this.$message.success('添加用户成功')
         this.addDialogVisible = false;
         this.getUserList();
       });
@@ -198,11 +198,11 @@ export default {
       const { data: rs } = await this.$http.put(`users/${userInfo.id}/state/${userInfo.mg_state}`)
 
       if (rs.meta.status !== 200) {
-        this.$msg.error(rs.meta.msg)
+        this.$message.error(rs.meta.msg)
         userInfo.mg_state = false
         return
       }
-      this.$msg.success('更新用户状态成功！')
+      this.$message.success('更新用户状态成功！')
     },
     handleSizeChange(val) {
       console.log(`每页 ${val} 条`)
@@ -222,7 +222,7 @@ export default {
       })
 
       console.log(rs)
-      if (rs.meta.status !== 200) return this.$msg.error(rs.meta.msg)
+      if (rs.meta.status !== 200) return this.$message.error(rs.meta.msg)
       this.userList = rs.data.users
       this.total = rs.data.total
     }
