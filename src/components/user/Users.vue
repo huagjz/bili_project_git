@@ -81,9 +81,9 @@ export default {
   components: {},
   data() {
     var checkMobile = (rule, value, callback) => {
-      var re = /^1[34578]\d{9}$/;
+      var reg = /^1[34578]\d{9}$/;
 
-      if (re.test(value)) {
+      if (reg.test(value)) {
         return callback();
       }
 
