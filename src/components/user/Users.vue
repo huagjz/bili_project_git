@@ -198,7 +198,7 @@ export default {
       console.log(item)
       const { data: rs } = await this.$http.get('users/' + item.id)
 
-      if (rs.meta.status !== 200) return this.$message.error(rs.mate.msg)
+      if (rs.meta.status !== 200) return this.$message.error(rs.mata.msg)
       console.log(rs)
       this.editForm = rs.data
       this.editDialogVisible = true
