@@ -40,7 +40,7 @@ export default {
     async getRightsList () {
       const { data: res } = await this.$http.get('rights/list')
       // console.log(res);
-      if (res.meta.status !== 200) return this.$message.error(res.mate.msg);
+      if (res.meta.status !== 200) return this.$message.error(res.mata.msg);
       this.rightsList = res.data
     }
   }

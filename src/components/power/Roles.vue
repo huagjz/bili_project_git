@@ -95,35 +95,41 @@ export default {
       setRightDialogVisible: false,
       // 权限列表
       rightsList: [],
-      //  树形控件的属性绑定对象
+      // 树形控件的属性绑定对象
       treeProps: {
         label: 'authName',
         children: 'children'
       },
-      //   默认选中节点ID值
+      // 默认选中节点ID值
       defKeys: [],
-      //   添加用户对话框
+      //  添加用户对话框
       AddRoleDialogVisible: false,
       // 添加角色表单
       addRoleForm: {},
-      //   添加角色表单验证
+      // 添加角色表单验证
       addRoleFormRules: {
         roleName: [{ required: true, message: '请输入角色名称', trigger: 'blur' }],
         roleDesc: [{ required: true, message: '请输入角色描述', trigger: 'blur' }]
       },
-      //   编辑角色信息
+      // 编辑角色信息
       editRoleForm: {},
       editRoleDialogVisible: false,
       editRoleFormRules: {
         roleName: [{ required: true, message: '请输入角色名称', trigger: 'blur' }],
         roleDesc: [{ required: true, message: '请输入角色描述', trigger: 'blur' }]
       },
-      //   当前即将分配权限的Id
+      // 当前即将分配权限的Id
       roleId: 0
     }
   },
   created() {
     this.getRolesList()
+  },
+  watch: {
+    defKeys(newValue) {
+      console.log(111111111);
+      console.log(newValue);
+    }
   },
   methods: {
     // 获取角色列表数据
@@ -152,10 +158,10 @@ export default {
         return this.$message.error('删除权限失败！')
       }
       role.children = res.data
-      //   不建议使用
+      //  不建议使用
       // this.getRolesList()
     },
-    // 分配权限
+    // 分配权限弹窗
     async showSetRightDialog(role) {
       this.roleId = role.id
       // 获取角色的所有权限
@@ -163,11 +169,13 @@ export default {
       if (res.meta.status !== 200) {
         return this.$message.error('获取权限数据失败！')
       }
-      //   获取权限树
+      //  获取权限树
       this.rightsList = res.data
-      //   console.log(res)
-      //   递归获取三级节点的id
+      //  console.log(res)
+      //  递归获取三级节点的id
       this.getLeafkeys(role, this.defKeys)
+      // 默认选中的权限数组data----role
+      console.log(role);
 
       this.setRightDialogVisible = true
     },
@@ -245,6 +253,8 @@ export default {
     async allotRights(roleId) {
       // 获得当前选中和半选中的Id
       const keys = [...this.$refs.treeRef.getCheckedKeys(), ...this.$refs.treeRef.getHalfCheckedKeys()]
+      console.log(1010101);
+      console.log(keys);
       // join() 方法用于把数组中的所有元素放入一个字符串
       const idStr = keys.join(',')
       const { data: res } = await this.$http.post(`roles/${this.roleId}/rights`, { rids: idStr })
