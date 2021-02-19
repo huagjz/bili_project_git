@@ -18,6 +18,7 @@
           <!-- 商品分类的级联选择框 -->
           <el-cascader
             v-model="selectedCateKeys"
+            size="small"
             :options="cateList"
             :props="cateProps"
             @change="handleChange"
@@ -233,7 +234,7 @@ export default {
     this.getCateList()
   },
   computed: {
-    //   按钮需要被禁用返回true, 否则返回false
+    // 按钮需要被禁用返回true, 否则返回false
     isBtnDisabled () {
       if (this.selectedCateKeys.length !== 3) {
         return true
@@ -255,7 +256,7 @@ export default {
     }
   },
   methods: {
-    //   获取所有的商品分类列表
+    // 获取所有的商品分类列表
     async getCateList () {
       const { data: res } = await this.$http.get('categories')
       if (res.meta.status !== 200) {
@@ -263,7 +264,7 @@ export default {
       }
       this.cateList = res.data
     },
-    // 级联选择框 选中变化 触发
+    // 级联选择框选中变化 触发
     handleChange () {
       this.getParamsData()
     },
