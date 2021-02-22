@@ -68,7 +68,7 @@
             <!-- 索引列 -->
             <el-table-column type="index"></el-table-column>
             <el-table-column label="参数名称" prop="attr_name"></el-table-column>
-            <el-table-column>
+            <el-table-column label="操作">
               <template slot-scope="scope">
                 <el-button
                   type="primary"
@@ -127,7 +127,7 @@
             <!-- 索引列 -->
             <el-table-column type="index"></el-table-column>
             <el-table-column label="属性名称" prop="attr_name"></el-table-column>
-            <el-table-column>
+            <el-table-column label="操作">
               <template slot-scope="scope">
                 <el-button
                   type="primary"
