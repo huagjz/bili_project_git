@@ -6,7 +6,7 @@
           <img src="../assets/logo.png" alt="图标" />
           <span>电商后台管理系统</span>
         </div>
-        <el-button @click="loginOut">退出</el-button>
+        <el-button @click="loginOut" style="height: 32px;line-height: 32px;padding-top: 0;margin-top: 14px;">退出</el-button>
       </el-header>
       <el-container>
         <el-aside :width="isCollapse?'64px':'200px'">
