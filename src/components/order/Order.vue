@@ -16,7 +16,7 @@
         </el-col>
       </el-row>
 
-      <!-- 订单列表 -->
+      <!-- 订单列表数据 -->
       <el-table :data="orderList" border stripe>
         <el-table-column type="index" label="#"></el-table-column>
         <el-table-column label="订单编号" prop="order_number"></el-table-column>
@@ -28,7 +28,9 @@
           </template>
         </el-table-column>
         <el-table-column label="是否发货" prop="is_send"></el-table-column>
-        <el-table-column label="下单时间" prop="create_time"></el-table-column>
+        <el-table-column label="下单时间" prop="create_time">
+          <template slot-scope="scope">{{scope.row.create_time | dataFormat }}</template>
+        </el-table-column>
         <el-table-column label="操作">
           <template slot>
             <el-button type="primary" size="mini" icon="el-icon-edit" @click="showEditDialog"></el-button>
@@ -142,7 +144,7 @@ export default {
         params: this.queryInfo
       })
       if (res.meta.status !== 200) {
-        return this.$message.error('获取订单列表失败！')
+        return this.$message.error(res.mate.msg);
       }
       this.total = res.data.total
       this.orderList = res.data.goods
