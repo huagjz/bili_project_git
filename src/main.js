@@ -17,8 +17,8 @@ import 'quill/dist/quill.bubble.css'
 
 import axios from 'axios'
 // 配置请求的根路径
-// axios.defaults.baseURL = 'http://timemeetyou.com:8889/api/private/v1/'
-axios.defaults.baseURL = 'https://www.liulongbin.top:8888/api/private/v1/'
+axios.defaults.baseURL = 'http://timemeetyou.com:8889/api/private/v1/'
+// axios.defaults.baseURL = 'https://www.liulongbin.top:8888/api/private/v1/'
 
 // axios.defaults.headers.Authorization = window.sessionStorage.getItem('token');
 
