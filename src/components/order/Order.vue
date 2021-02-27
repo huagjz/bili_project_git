@@ -33,7 +33,7 @@
         </el-table-column>
         <el-table-column label="操作">
           <template slot>
-            <el-button type="primary" size="mini" icon="el-icon-edit" @click="showEditDialog"></el-button>
+            <el-button type="primary" size="mini" icon="el-icon-edit" @click="addressDialogVisible = true"></el-button>
             <el-button
               type="success"
               size="mini"
@@ -158,18 +158,14 @@ export default {
       this.queryInfo.pagenum = newSize
       this.getOrderList()
     },
-    showEditDialog () {
-      this.addressDialogVisible = true
-    },
     addressDialogClosed () {
       this.$refs.addressFormRef.resetFields()
     },
     async showProgressDialog () {
       // 供测试的物流单号：1106975712662
       const { data: res } = await this.$http.get('/kuaidi/1106975712662')
-      if (res.meta.status !== 200) {
-        return this.$message.error('获取物流进度失败!')
-      }
+
+      if (res.meta.status !== 200) return this.$message.error(res.mate.msg);
       this.progressInfo = res.data
       this.progressDialogVisible = true
     }

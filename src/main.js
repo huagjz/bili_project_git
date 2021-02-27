@@ -14,11 +14,19 @@ import VueQuillEditor from 'vue-quill-editor'
 import 'quill/dist/quill.core.css'
 import 'quill/dist/quill.snow.css'
 import 'quill/dist/quill.bubble.css'
+// 导入接口
+import CONST from './assets/MAIN_CONST.js';
 
 import axios from 'axios'
+console.log(CONST.BASE_URL);
+
+Vue.prototype.BASE_URL = CONST.BASE_URL;
+
+Vue.prototype.$http = CONST.BASE_URL;
+
 // 配置请求的根路径
-axios.defaults.baseURL = 'http://timemeetyou.com:8889/api/private/v1/'
-// axios.defaults.baseURL = 'https://www.liulongbin.top:8888/api/private/v1/'
+// axios.defaults.baseURL = 'http://timemeetyou.com:8889/api/private/v1/'
+axios.defaults.baseURL = CONST.BASE_URL;
 
 // axios.defaults.headers.Authorization = window.sessionStorage.getItem('token');
 

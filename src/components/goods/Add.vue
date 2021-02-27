@@ -156,7 +156,7 @@ export default {
       // 静态属性列表数据
       onlyTableData: [],
       // 图片上传地址
-      uploadURL: 'https://www.liulongbin.top:8888/api/private/v1/upload',
+      uploadURL: this.BASE_URL + 'upload',
       // 图片上传组件的请求对象
       headerObj: {
         Authorization: window.sessionStorage.getItem('token')
