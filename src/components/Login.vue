@@ -39,7 +39,7 @@ export default {
         if (rs.meta.status !== 200) return this.$message.error(rs.meta.msg)
 
         this.$message.success('登录成功');
-        console.log('登录成功');
+        // console.log('登录成功');
 
         // 将登录成功的token，保存在客户端的sessionStorage中
         window.sessionStorage.setItem('token', rs.data.token);

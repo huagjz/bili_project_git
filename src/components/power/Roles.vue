@@ -127,8 +127,8 @@ export default {
   },
   watch: {
     defKeys(newValue) {
-      console.log(111111111);
-      console.log(newValue);
+      // console.log(111111111);
+      // console.log(newValue);
     }
   },
   methods: {
@@ -175,7 +175,7 @@ export default {
       //  递归获取三级节点的id
       this.getLeafkeys(role, this.defKeys)
       // 默认选中的权限数组data----role
-      console.log(role);
+      // console.log(role);
 
       this.setRightDialogVisible = true
     },
@@ -253,8 +253,7 @@ export default {
     async allotRights(roleId) {
       // 获得当前选中和半选中的Id
       const keys = [...this.$refs.treeRef.getCheckedKeys(), ...this.$refs.treeRef.getHalfCheckedKeys()]
-      console.log(1010101);
-      console.log(keys);
+      // console.log(keys);
       // join() 方法用于把数组中的所有元素放入一个字符串
       const idStr = keys.join(',')
       const { data: res } = await this.$http.post(`roles/${this.roleId}/rights`, { rids: idStr })
