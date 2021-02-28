@@ -1,4 +1,11 @@
 module.exports = {
+  publicPath: './', // 相对于 HTML 页面（目录相同）
+  // assetsDir: 'static',
+  // outputDir: 'dist',
+  // lintOnSave: true,
+  // runtimeCompiler: true, // 关键点在这
+  // 调整内部的 webpack 配置。
+  configureWebpack: () => {},
   chainWebpack: config => {
     // 发布模式
     config.when(process.env.NODE_ENV === 'production', config => {
